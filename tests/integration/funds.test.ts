@@ -1,8 +1,15 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterAll } from 'vitest';
 import request from 'supertest';
 import app from '../../src/app.js';
+import { prisma } from '../../src/controllers/fund.controller.js';
 
 describe('Funds API Integration Tests', () => {
+  afterAll(async () => {
+    await prisma.fund.deleteMany({
+      where: { name: "Vitest Venture Fund" }
+    });
+    await prisma.$disconnect();
+  });
 
   it('GET /funds should return a list of funds', async () => {
     const res = await request(app).get('/funds');

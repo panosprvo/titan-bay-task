@@ -1,8 +1,16 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterAll } from 'vitest';
 import * as fundController from '../../src/controllers/fund.controller.js';
 import { prisma } from '../../src/controllers/fund.controller.js';
 
 describe('Fund Controller Unit Tests', () => {
+
+  afterAll(async () => {
+    await prisma.fund.deleteMany({
+      where: { name: "Vitest Venture Fund" }
+    });
+    await prisma.$disconnect();
+  });
+
   it('should return all funds', async () => {
     // Define your mock data
     const mockFunds = [
