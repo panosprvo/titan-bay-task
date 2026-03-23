@@ -3,7 +3,7 @@ import { type InvestorType, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getAllInvestors = async(res: Response) => {
+export const getAllInvestors = async(req: Request, res: Response) => {
   const investors = await prisma.investor.findMany();
   res.status(200).json(investors);
 }
