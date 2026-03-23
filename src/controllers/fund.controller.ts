@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
 import { type FundStatus, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
-export const getAllFunds =  async (res: Response) => {
+export const getAllFunds =  async (req: Request, res: Response) => {
   const funds = await prisma.fund.findMany();
   res.status(200).json(funds);
 }
