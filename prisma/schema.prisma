@@ -1,0 +1,49 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Fund {
+  id              String       @id @default(uuid())
+  name            String
+  vintage_year    Int
+  target_size_usd Decimal
+  status          FundStatus
+  created_at      DateTime     @default(now())
+  investments     Investment[]
+}
+
+model Investor {
+  id            String       @id @default(uuid())
+  name          String
+  investor_type InvestorType
+  email         String       @unique
+  created_at    DateTime     @default(now())
+  investments   Investment[]
+}
+
+model Investment {
+  id              String   @id @default(uuid())
+  amount_usd      Decimal  @db.Decimal(15, 2)
+  investment_date DateTime @db.Date
+  fund_id         String
+  fund            Fund     @relation(fields: [fund_id], references: [id])
+  investor_id     String
+  investor        Investor @relation(fields: [investor_id], references: [id])
+}
+
+enum FundStatus {
+  Fundraising
+  Investing
+  Closed
+}
+
+enum InvestorType {
+  Individual
+  Institution
+  FamilyOffice
+}
