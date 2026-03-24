@@ -29,7 +29,7 @@ npx prisma db seed
 npm run dev
 ```
 
-The serve will start at http://localhost:3000. You can verify the status at [http://localhost:3000/health](http://localhost:3000/health).
+The server will start at [http://localhost:3000](http://localhost:3000). You can verify the status at [http://localhost:3000/health](http://localhost:3000/health).
 
 6. **Run tests**
 ```
@@ -70,7 +70,7 @@ Assumptions:
 * **Data Integrity**: I implemented manual checks and Zod schemas to ensure no "empty" entities can be created, returning a `400 Bad Request` if required fields are missing.
 * **UUID Standards**: I assumed the use of UUID v4 for all primary keys to ensure global uniqueness and prevent ID enumeration attacks.
 * **Currency Handling**: `Decimal` types were used for all financial fields (USD) within the database to prevent the precision errors associated with floating-point math in financial applications.
-* **Test Environment**: For the scope of this task, integration tests run against the local Docker PostgreSQL instance. I have implemented basic cleanup hooks in the test suite to minimize data pollution, though in a production CI/CD environment, I would recommend a dedicated, ephemeral test database.
+* **Test Environment**: For the scope of this task, integration tests run against the local Docker PostgreSQL instance. I have implemented basic cleanup hooks in the test suite to minimize data pollution, though in a production CI/CD environment, I would recommend a dedicated, self contained test database.
 
 ### Security Note:
 I have included default credentials in the `.env.example` and `docker-compose.yml` specifically to facilitate a 'one-click' setup for this technical task.
